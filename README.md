@@ -47,6 +47,11 @@ The application can be run as a standalone jar as follows (replace the version w
 java -jar ./target/demo-app-1.0.0.jar
 ```
 
+## Maven Run
+```bash
+mvn clean install spring-boot:run
+```
+
 ## Docker
 ```bash
 docker run -d -p 8080:8080 ghcr.io/amreshh/demo-app:1.0.0
