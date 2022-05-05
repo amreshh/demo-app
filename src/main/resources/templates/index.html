@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" th:href="@{/styles/main.css}" />
+    <title>Devoteam</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="bg1">
+            <h2><i class="fa fa-cogs"></i></h2>
+            <p><a th:href="${T(com.devoteam.demo.DemoController).devoteam()}">Devoteam</a></p>
+        </div>
+        <div class="bg1">
+            <h2><i class="fa fa-terminal"></i></h2>
+            <p><a th:href="${T(com.devoteam.demo.DemoController).itech()}">Innovative Tech</a></p>
+        </div>
+        <div class="bg1">
+            <h2><i class="fa fa-calendar"></i></h2>
+            <p><a th:href="${T(com.devoteam.demo.DemoController).events()}">Events</a></p>
+        </div>
+        <div class="bg1">
+            <h2><i class="fa fa-laptop"></i></h2>
+            <p><a th:href="${T(com.devoteam.demo.DemoController).careers()}">Careers</a></p>
+        </div>
+        <div class="bg1">
+            <h2><i class="fa fa-podcast"></i></h2>
+            <p><a th:href="${T(com.devoteam.demo.DemoController).insights()}">Insights</a></p>
+        </div>
+    </div>
+</body>
+
+</html>

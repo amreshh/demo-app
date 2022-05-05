@@ -1,0 +1,141 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "maven build",
+            "type": "shell",
+            "command": [
+                "mvn --global-settings ${workspaceFolder}/.mvn/settings.xml clean install spring-boot:repackage"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "maven clean",
+            "type": "shell",
+            "command": [
+                "mvn --global-settings ${workspaceFolder}/.mvn/settings.xml clean"
+            ]
+        },
+        {
+            "label": "maven test",
+            "type": "shell",
+            "command": [
+                "mvn --global-settings ${workspaceFolder}/.mvn/settings.xml surefire-report:report"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "maven run",
+            "type": "shell",
+            "command": [
+                "mvn --global-settings ${workspaceFolder}/.mvn/settings.xml clean spring-boot:run"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "maven sonar",
+            "type": "shell",
+            "command": [
+                "mvn --global-settings .mvn/settings.xml sonar:sonar"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "gatling test",
+            "type": "shell",
+            "command": [
+                "mvnw gatling:test"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "docker build",
+            "type": "shell",
+            "command": [
+                "docker build -t aspv059.ux.resource.tld/cdaas-docker/cdaas-demo-app:${input:dockerImageVersion} . &&",
+                "docker image prune -f --filter label=stage=builder"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "docker gatling test",
+            "type": "shell",
+            "command": [
+                "docker run --user 1000:100 -it --name gatling --network host -v $PWD:/gatling -w /gatling openjdk:8-jdk-alpine ./mvnw gatling:test &&",
+                "docker rm gatling"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "npm install",
+            "type": "shell",
+            "command": [
+                "cd ${workspaceFolder}/src/test/cypress &&",
+                "npm install"
+            ]
+        },
+        {
+            "label": "cypress open",
+            "type": "shell",
+            "command": [
+                "cd ${workspaceFolder}/src/test/cypress &&",
+                "npm run cy:open"
+            ]
+        },
+        {
+            "label": "cypress run",
+            "type": "shell",
+            "command": [
+                "cd ${workspaceFolder}/src/test/cypress &&",
+                "npm run cy:run"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "docker cypress run",
+            "type": "shell",
+            "command": [
+                "cd ${workspaceFolder}/src/test/cypress &&",
+                "docker run --user 1000:100 -it --name cypress --network host -v $PWD:/e2e -w /e2e cypress/included:5.6.0 &&",
+                "docker rm cypress"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+    ],
+    "inputs": [
+        {
+            "id": "dockerImageVersion",
+            "description": "Docker image version",
+            "type": "promptString"
+        }
+    ]
+}
